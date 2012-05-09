@@ -1,4 +1,4 @@
-package illuminare;
+package com.freedobjective.illuminare;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
