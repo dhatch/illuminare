@@ -1,6 +1,7 @@
 package com.freedobjective.illuminare;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class IlluminareDesktopStarter {
 
@@ -8,7 +9,11 @@ public class IlluminareDesktopStarter {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new LwjglApplication(new IlluminareGame(), "Illuminare", 1024, 768, false);
+		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		config.title = "Illuminare";
+		config.width = 1024;
+		config.height = 720;
+		new LwjglApplication(new IlluminareGame(), config);
 	}
 
 }
