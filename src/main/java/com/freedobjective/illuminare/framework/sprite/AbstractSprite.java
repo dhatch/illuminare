@@ -1,0 +1,52 @@
+package com.freedobjective.illuminare.framework.sprite;
+
+import org.lwjgl.util.vector.Vector2f;
+
+import com.freedobjective.illuminare.framework.coordinates.CoordinateSystem;
+
+public abstract class AbstractSprite implements Sprite {
+
+	private CoordinateSystem coordinateSystem;
+	private CoordinateSystem modelCoordinates;
+	
+	public AbstractSprite(CoordinateSystem coordSys, Vector2f pos) {
+		coordinateSystem = coordSys;
+		modelCoordinates = CoordinateSystem.createCoordinateSystem(coordinateSystem, 1.0f, pos);
+	}
+	
+	@Override
+	public abstract void init();
+
+	@Override
+	public abstract void update(int delta);
+
+	@Override
+	public abstract void render();
+	
+	@Override
+	public abstract void destroy();
+	
+	public void translate(float x, float y) {
+		modelCoordinates.translate(x, y);
+	}
+	
+	public void scale(float scale) {
+		modelCoordinates.setScale(modelCoordinates.getScale()*scale);
+	}
+	
+	public void setScale(float scale) {
+		modelCoordinates.setScale(scale);
+	}
+	
+	public float getScale() {
+		return modelCoordinates.getScale();
+	}
+	
+	public CoordinateSystem getCoordinateSystem() {
+		return coordinateSystem;
+	}
+	
+	public CoordinateSystem getModelCoordinateSystem() {
+		return modelCoordinates;
+	}
+}

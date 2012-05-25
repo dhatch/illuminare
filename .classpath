@@ -2,20 +2,16 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl-natives.jar"/>
-	<classpathentry kind="lib" path="libs/gdx-backend-lwjgl.jar" sourcepath="libs/gdx-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://libgdx.badlogicgames.com/nightlies/docs/api/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="libs/gdx-natives.jar"/>
-	<classpathentry kind="lib" path="libs/gdx-sources.jar"/>
-	<classpathentry kind="lib" path="libs/gdx.jar" sourcepath="libs/gdx-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://libgdx.badlogicgames.com/nightlies/docs/api/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="src" path="src/main/shaders"/>
 	<classpathentry kind="lib" path="libs/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://www.lwjgl.org/javadoc/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="illuminare/libs/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/slick.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="target"/>
 </classpath>
