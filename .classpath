@@ -4,7 +4,11 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="src" path="src/main/shaders"/>
 	<classpathentry kind="lib" path="libs/junit-4.10.jar"/>
-	<classpathentry kind="lib" path="libs/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="libs/lwjgl_util.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://www.lwjgl.org/javadoc/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="libs/lwjgl.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://www.lwjgl.org/javadoc/"/>

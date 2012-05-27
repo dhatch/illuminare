@@ -26,7 +26,7 @@ public class RelativeCoordinateSystem extends CoordinateSystem {
 	@Override
 	public Matrix4f getTransformMatrix() {
 		Matrix4f mat = new Matrix4f();
-		mat.translate((Vector2f)getOriginPos())
+		mat.translate((Vector2f)new Vector2f(getOriginPos()).negate())
 			.scale(new Vector3f(1/scale, 1/scale, 1/scale));
 		return mat;
 	}
@@ -55,5 +55,9 @@ public class RelativeCoordinateSystem extends CoordinateSystem {
 
 	public void setScale(float scale) {
 		this.scale = scale;
+	}
+	
+	public CoordinateSystem getRelativeCoordinateSystem() {
+		return relative;
 	}
 }

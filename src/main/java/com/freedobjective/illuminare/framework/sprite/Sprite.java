@@ -1,5 +1,7 @@
 package com.freedobjective.illuminare.framework.sprite;
 
+import com.freedobjective.illuminare.framework.RenderContext;
+
 public interface Sprite {
 	
 	/**
@@ -13,9 +15,9 @@ public interface Sprite {
 	public void update(int delta);
 	
 	/**
-	 * Contain all code for rendering sprite.
+	 * Contains all code for rendering sprite.
 	 */
-	public void render();
+	public void render(RenderContext context);
 	
 	/**
 	 * Called to clean up sprite.  Clean up resources etc.

@@ -1,5 +1,7 @@
 package com.freedobjective.illuminare.framework;
 
+import org.lwjgl.opengl.Display;
+
 public interface Game {
 	/**
 	 * Called to initialize the game system.  Perform resource loading etc.

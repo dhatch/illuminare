@@ -40,6 +40,7 @@ public abstract class CoordinateSystem {
 	public abstract Matrix4f getReverseTransformMatrix();
 	public abstract Vector4f transform(Vector4f pos);
 	public abstract Vector4f reverseTransform(Vector4f pos);
+	public abstract CoordinateSystem getRelativeCoordinateSystem();
 	
 	public boolean isRelative() {
 		return false;

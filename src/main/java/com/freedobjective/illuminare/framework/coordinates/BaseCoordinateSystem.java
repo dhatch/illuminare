@@ -29,4 +29,8 @@ public class BaseCoordinateSystem extends CoordinateSystem {
 	public Vector4f reverseTransform(Vector4f pos) {
 		return null;
 	}
+	
+	public CoordinateSystem getRelativeCoordinateSystem() {
+		return null;
+	}
 }

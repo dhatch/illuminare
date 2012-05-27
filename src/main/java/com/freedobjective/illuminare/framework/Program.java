@@ -12,6 +12,10 @@ public class Program {
 	private ArrayList<Shader> shaders;
 	private int programID;
 	
+	public int getProgramID() {
+		return programID;
+	}
+
 	public Program(ArrayList<Shader> shaders, ArrayList<Program> includedPrograms) {
 		this.shaders = shaders;
 		for (Program p: includedPrograms) {

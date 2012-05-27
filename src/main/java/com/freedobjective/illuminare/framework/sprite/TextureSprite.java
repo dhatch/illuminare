@@ -2,6 +2,7 @@ package com.freedobjective.illuminare.framework.sprite;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.freedobjective.illuminare.framework.RenderContext;
 import com.freedobjective.illuminare.framework.coordinates.CoordinateSystem;
 
 public class TextureSprite extends AbstractSprite {
@@ -24,7 +25,7 @@ public class TextureSprite extends AbstractSprite {
 	}
 
 	@Override
-	public void render() {
+	public void render(RenderContext context) {
 		// TODO Auto-generated method stub
 		
 	}

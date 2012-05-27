@@ -65,6 +65,9 @@ public class Application {
 		game.resize(1152, 768);
 		while (!Display.isCloseRequested()) {
 			int delta = getDelta();
+			if (delta < 0) {
+				delta = 0;
+			}
 			
 			game.update(delta);
 			game.render();

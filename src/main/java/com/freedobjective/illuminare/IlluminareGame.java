@@ -6,10 +6,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.util.vector.Vector2f;
 
 import com.freedobjective.illuminare.framework.Game;
 import com.freedobjective.illuminare.framework.Program;
+import com.freedobjective.illuminare.framework.RenderGroup;
 import com.freedobjective.illuminare.framework.Shader;
+import com.freedobjective.illuminare.framework.World;
+import com.freedobjective.illuminare.framework.sprite.RectSprite;
+import com.freedobjective.illuminare.framework.sprite.Sprite;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
@@ -20,76 +25,54 @@ import static org.lwjgl.opengl.GL32.*;
 
 public class IlluminareGame implements Game {
 	
-	final float[] vertexPositions = {
-			0.75f,  0.75f, 0.0f, 1.0f,
-			0.75f, -0.75f, 0.0f, 1.0f,
-		   -0.75f, -0.75f, 0.0f, 1.0f,
-	};
-	
-	private int vao;
-	private Program prog;
+	private World world;
+	private Program main;
 	
 	@Override
 	public void init() {
 		System.out.println(glGetString(GL_SHADING_LANGUAGE_VERSION));
 		System.out.println(glGetString(GL_VERSION));
 
-		Shader vertex = new Shader("target/test.v.glsl", GL_VERTEX_SHADER);
+		Shader vertex = new Shader("target/main.v.glsl", GL_VERTEX_SHADER);
 		Shader frag = new Shader("target/test.f.glsl", GL_FRAGMENT_SHADER);
 		
-		prog = new Program(new ArrayList<Shader>(Arrays.asList(new Shader[]{vertex,frag})));
+		Program main = new Program(new ArrayList<Shader>(Arrays.asList(new Shader[]{vertex,frag})));
+		
+		world = new World(new ArrayList<RenderGroup>());
+		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+		sprites.add(new RectSprite(world.getCoordinateSystem(), new Vector2f(100.0f, 100.0f), new Vector2f(0.0f, 0.0f)));
+		world.addGroup(new RenderGroup("base", sprites, main));
 		try {
-			prog.compileProgram();
+			world.init();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.exit(0);
+			System.exit(1);
 		}
 		
-		vao = glGenVertexArrays();
-		glBindVertexArray(vao);
-		
 	}
-
+	
 	@Override
 	public void render() {
-		
-		FloatBuffer vertexPositionsBuffer = BufferUtils.createFloatBuffer(vertexPositions.length);
-		vertexPositionsBuffer.put(vertexPositions);
-		vertexPositionsBuffer.flip();
-		
-		int positionBufferObject = glGenBuffers();	       
-		glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
-	    glBufferData(GL_ARRAY_BUFFER, vertexPositionsBuffer, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+//		Sets background color.
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		prog.enable();
-
-		glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 4, GL_FLOAT, false, 0, 0);
-
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-
-		glDisableVertexAttribArray(0);
-		prog.disable();
+		
+		world.render();
 	}
 
 	@Override
 	public void update(int delta) {
-		
+		world.update(delta);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		
+		world.getCamera().resize();
 	}
 
 	@Override
 	public void exit() {
-		
+		world.destroy();
 	}
 	
 }

@@ -1,7 +1,18 @@
 package com.freedobjective.illuminare.framework;
 
 import java.io.IOException;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
+
+import org.lwjgl.BufferUtils;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL21.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL31.*;
+import static org.lwjgl.opengl.GL32.*;
 
 import com.freedobjective.illuminare.framework.sprite.Sprite;
 
@@ -13,6 +24,7 @@ public class RenderGroup {
 	private ArrayList<Sprite> sprites;
 	private Program program;
 	private String groupID;
+	private World world;
 	
 	public RenderGroup(String groupID, ArrayList<Sprite> sprites, Program prog) {
 		this.groupID = groupID;
@@ -51,9 +63,14 @@ public class RenderGroup {
 	 */
 	public void render() {
 		program.enable();
+		int camClipMatLoc = glGetUniformLocation(program.getProgramID(), "cameraToClipTransform");
+		FloatBuffer matBuff = BufferUtils.createFloatBuffer(16);
+		world.getCamera().getCameraToClipTransform().store(matBuff);
+		matBuff.flip();
+		glUniformMatrix4(camClipMatLoc, false, matBuff);
 		
 		for (Sprite s: sprites) {
-			s.render();
+			s.render(new RenderContext(world.getCamera()));
 		}
 		
 		program.disable();
@@ -84,5 +101,13 @@ public class RenderGroup {
 	
 	public String getGroupID() {
 		return groupID;
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
 	}
 }

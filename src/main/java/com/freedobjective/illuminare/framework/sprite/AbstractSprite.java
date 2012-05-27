@@ -2,6 +2,7 @@ package com.freedobjective.illuminare.framework.sprite;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.freedobjective.illuminare.framework.RenderContext;
 import com.freedobjective.illuminare.framework.coordinates.CoordinateSystem;
 
 public abstract class AbstractSprite implements Sprite {
@@ -19,9 +20,9 @@ public abstract class AbstractSprite implements Sprite {
 
 	@Override
 	public abstract void update(int delta);
-
+	
 	@Override
-	public abstract void render();
+	public abstract void render(RenderContext context);
 	
 	@Override
 	public abstract void destroy();

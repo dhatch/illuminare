@@ -6,6 +6,9 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL21.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL31.*;
+import static org.lwjgl.opengl.GL32.*;
 
 public class Shader {
 	private int shaderType;
@@ -60,9 +63,9 @@ public class Shader {
 			case GL_VERTEX_SHADER:
 				strShaderType = "vertex";
 				break;
-//			case GL_GEOMETRY_SHADER:
-//				strShaderType = "geometry";
-//				break;
+			case GL_GEOMETRY_SHADER:
+				strShaderType = "geometry";
+				break;
 			case GL_FRAGMENT_SHADER:
 				strShaderType = "fragment";
 				break;
