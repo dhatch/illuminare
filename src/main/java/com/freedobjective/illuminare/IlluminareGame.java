@@ -53,7 +53,7 @@ public class IlluminareGame implements Game {
 		System.out.println(""+app.getAspectRatio() +"\n" + world.getCamera().getCameraDimensions());
 		
 		sprites = new ArrayList<Sprite>();
-		sprites.add(new TextureSprite(world.getCoordinateSystem(), new Vector2f(100.0f, 100.0f), new Vector2f(100.0f, 100.0f), "placeholder.png"));
+		sprites.add(new TextureSprite(world.getCoordinateSystem(), new Vector2f(100.0f, 100.0f), new Vector2f(500.0f, 500.0f), "placeholder.png"));
 		world.addGroup(new RenderGroup("texture", sprites, textureProg));
 		
 		try {
@@ -62,6 +62,8 @@ public class IlluminareGame implements Game {
 			e.printStackTrace();
 			System.exit(1);
 		}
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 	
 	@Override
