@@ -30,16 +30,11 @@ public class RectSprite extends AbstractSprite {
 		super(coordSys, pos);
 		this.dimensions = dimensions;
 	}
-
+	
 	@Override
 	public void init() {
 		// Calculate vertex positions.
-		positions = new float[]{
-			0.0f, 0.0f, 0.0f, 1.0f,
-			0.0f, dimensions.y, 0.0f, 1.0f,
-			dimensions.x, 0.0f, 0.0f, 1.0f,
-			dimensions.x, dimensions.y, 0.0f, 1.0f
-		};
+		positions = getVertexAttribArray();
 		FloatBuffer posBuffer = BufferUtils.createFloatBuffer(positions.length);
 		posBuffer.put(positions);
 		posBuffer.flip();
@@ -65,19 +60,32 @@ public class RectSprite extends AbstractSprite {
         // Set up VAO for rendering.
 		vao = glGenVertexArrays();
 		glBindVertexArray(vao);
-		glBindBuffer(GL_ARRAY_BUFFER, vbo);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 4, GL_FLOAT, false, 0, 0);
+		bindVertexAttribArray(vbo);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-
+	
+	protected float[] getVertexAttribArray() {
+		return new float[]{
+				0.0f, 0.0f, 0.0f, 1.0f,
+				0.0f, dimensions.y, 0.0f, 1.0f,
+				dimensions.x, 0.0f, 0.0f, 1.0f,
+				dimensions.x, dimensions.y, 0.0f, 1.0f
+			};
+	}
+	
+	protected void bindVertexAttribArray(int vbo) {
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 4, GL_FLOAT, false, 0, 0);
+	}
+	
 	@Override
 	public void update(int delta) {
-		translate(0.1f * delta, 0.1f * delta);
+
 	}
 
 	@Override
@@ -106,6 +114,18 @@ public class RectSprite extends AbstractSprite {
 	@Override
 	public void destroy() {
 		
+	}
+
+	public Vector2f getDimensions() {
+		return dimensions;
+	}
+
+	public void setDimensions(Vector2f dimensions) {
+		this.dimensions = dimensions;
+	}
+
+	public int getVao() {
+		return vao;
 	}
 
 }

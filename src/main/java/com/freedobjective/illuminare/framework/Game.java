@@ -6,7 +6,7 @@ public interface Game {
 	/**
 	 * Called to initialize the game system.  Perform resource loading etc.
 	 */
-	public void init();
+	public void init(Application app);
 	public void render();
 	public void resize(int width, int height);
 	/**

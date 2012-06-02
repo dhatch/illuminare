@@ -10,6 +10,22 @@ Versions
 - cave
 - person (move left/right)
 
+	- Limited Level Infrastructure
+		- LevelManager
+			- save()
+			- load()
+			- getBlocks()
+		- Block
+			- getEntities()
+			- getCave()
+			- getCoordinateSystem()
+		- Entity
+			- Person
+			- SavePoint
+			- Ghost
+		- CaveMesh
+			
+	
 0.2
 ===
 

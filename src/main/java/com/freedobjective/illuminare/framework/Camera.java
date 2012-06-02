@@ -15,11 +15,11 @@ public class Camera {
 	private World world;
 	private CoordinateSystem coordinateSystem;
 	
-	public Camera(World world) {
+	public Camera(World world, Vector2f cameraDimensions) {
 		this.world = world;
 		worldPos = new Vector2f();
 		scale = 1.0f;
-		this.cameraDimensions = new Vector2f(Display.getWidth(), Display.getHeight());
+		this.cameraDimensions = new Vector2f(cameraDimensions);
 		coordinateSystem = CoordinateSystem.createCoordinateSystem(world.getCoordinateSystem(), scale, new Vector2f());
 		transformCoordinateSystem();
 	}
@@ -38,8 +38,8 @@ public class Camera {
 		transformCoordinateSystem();
 	}
 	
-	public void resize() {
-		setCameraDimensions(new Vector2f(Display.getWidth(), Display.getHeight()));
+	public void resize(int height, int width) {
+		setCameraDimensions(new Vector2f(height, width));
 	}
 	
 	public Vector2f getWorldPos() {
@@ -65,7 +65,6 @@ public class Camera {
 	}
 	
 	public Matrix4f getCameraToClipTransform() {
-		Vector2f translation = (Vector2f)(new Vector2f(cameraDimensions).negate().scale(0.5f));
 		Matrix4f mat = new Matrix4f();
 		mat.m00 = 2/cameraDimensions.x;
 		mat.m11 = 2/cameraDimensions.y;

@@ -18,11 +18,11 @@ public class World {
 	private Camera camera;
 	private CoordinateSystem coordinateSystem;
 	
-	public World(ArrayList<RenderGroup> groups) {
+	public World(ArrayList<RenderGroup> groups, Vector2f cameraDimensions) {
 		this.groups = new HashMap<String, RenderGroup>();
 		setGroups(groups);
 		coordinateSystem = CoordinateSystem.createCoordinateSystem();
-		camera = new Camera(this);
+		camera = new Camera(this, cameraDimensions);
 	}
 
 	public ArrayList<RenderGroup> getGroups() {

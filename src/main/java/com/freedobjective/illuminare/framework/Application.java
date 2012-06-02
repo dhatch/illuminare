@@ -61,7 +61,7 @@ public class Application {
 			System.exit(1);
 		}
 		
-		game.init();
+		game.init(this);
 		game.resize(1152, 768);
 		while (!Display.isCloseRequested()) {
 			int delta = getDelta();
@@ -70,6 +70,10 @@ public class Application {
 			}
 			
 			game.update(delta);
+			if (Display.wasResized()) {
+//				Call resize as needed. Likely will not occur too often.
+				game.resize(Display.getWidth(), Display.getHeight());
+			}
 			game.render();
 			
 			Display.update();
@@ -79,5 +83,9 @@ public class Application {
 		
 		game.exit();
 		Display.destroy();
+	}
+	
+	public float getAspectRatio() {
+		return Display.getWidth()/(float)Display.getHeight();
 	}
 }
