@@ -14,7 +14,7 @@ public class Mesh implements Serializable {
 	private ArrayList<Vector2f> positions;
 	
 	public Mesh(ArrayList<Vector2f> positions) {
-		positions = positions;
+		this.positions = positions;
 	}
 	
 	public Mesh() {
