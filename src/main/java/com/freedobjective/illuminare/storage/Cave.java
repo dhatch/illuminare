@@ -14,6 +14,10 @@ public class Cave extends Entity {
 		this.mesh = mesh;
 	}
 	
+	protected Cave() {
+		
+	}
+	
 	public Mesh getMesh() {
 		return mesh;
 	}

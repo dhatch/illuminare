@@ -1,10 +1,12 @@
 package com.freedobjective.illuminare.framework.coordinates;
 
+import java.io.Serializable;
+
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
-public abstract class CoordinateSystem {
+public abstract class CoordinateSystem implements Serializable {
 	
 	public static CoordinateSystem createCoordinateSystem() {
 		return new BaseCoordinateSystem();
@@ -22,6 +24,10 @@ public abstract class CoordinateSystem {
 
 	protected CoordinateSystem(Vector2f originPos) {
 		this.originPos = originPos;
+	}
+	
+	protected CoordinateSystem() {
+		
 	}
 	
 	public Vector2f getOriginPos() {

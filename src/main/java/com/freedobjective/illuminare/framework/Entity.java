@@ -1,10 +1,12 @@
 package com.freedobjective.illuminare.framework;
 
+import java.io.Serializable;
+
 import org.lwjgl.util.vector.Vector2f;
 
 import com.freedobjective.illuminare.storage.Block;
 
-public abstract class Entity {
+public abstract class Entity implements Serializable {
 
 	/**
 	 * This position of the entity inside the block.
@@ -23,7 +25,11 @@ public abstract class Entity {
 		this.block = block;
 		this.pos = pos;
 	}
-
+	
+	protected Entity() {
+		
+	}
+	
 	public Vector2f getPos() {
 		return pos;
 	}

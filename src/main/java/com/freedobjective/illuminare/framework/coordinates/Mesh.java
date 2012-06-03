@@ -1,5 +1,6 @@
 package com.freedobjective.illuminare.framework.coordinates;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import org.lwjgl.util.vector.Vector2f;
@@ -8,7 +9,7 @@ import org.lwjgl.util.vector.Vector2f;
  * @author dhatch
  * A list of coordinates for a polygon to be drawn.
  */
-public class Mesh {
+public class Mesh implements Serializable {
 	
 	private ArrayList<Vector2f> positions;
 	

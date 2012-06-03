@@ -1,5 +1,6 @@
 package com.freedobjective.illuminare.storage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,7 +9,7 @@ import org.lwjgl.util.vector.Vector2f;
 import com.freedobjective.illuminare.framework.Entity;
 import com.freedobjective.illuminare.framework.coordinates.CoordinateSystem;
 
-public class Block {
+public class Block implements Serializable {
 	private ArrayList<Entity> entities;
 	private CoordinateSystem coordSystem;
 	private Level level;
@@ -22,10 +23,14 @@ public class Block {
 		this.entities = new ArrayList(Arrays.asList(entities));
 	}
 
+	protected Block() {
+		
+	}
+	
 	public ArrayList<Entity> getEntities() {
 		return entities;
 	}
-
+	
 	public void setEntities(ArrayList<Entity> entities) {
 		this.entities = entities;
 		for (Entity e: entities) {

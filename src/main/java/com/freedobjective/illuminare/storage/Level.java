@@ -1,10 +1,11 @@
 package com.freedobjective.illuminare.storage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.freedobjective.illuminare.framework.coordinates.CoordinateSystem;
 
-public class Level {
+public class Level implements Serializable {
 	private ArrayList<Block> blocks;
 	private CoordinateSystem worldCoordinates;
 	private String levelName;
@@ -14,7 +15,11 @@ public class Level {
 		this.worldCoordinates = CoordinateSystem.createCoordinateSystem();
 		this.blocks = new ArrayList<Block>();
 	}
-
+	
+	protected Level() {
+		
+	}
+	
 	public ArrayList<Block> getBlocks() {
 		return blocks;
 	}

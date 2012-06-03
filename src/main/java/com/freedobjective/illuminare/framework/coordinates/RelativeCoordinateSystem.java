@@ -22,7 +22,11 @@ public class RelativeCoordinateSystem extends CoordinateSystem {
 		relative = rel;
 		this.scale = scale;
 	}
-
+	
+	protected RelativeCoordinateSystem() {
+		
+	}
+	
 	@Override
 	public Matrix4f getTransformMatrix() {
 		Matrix4f mat = new Matrix4f();
