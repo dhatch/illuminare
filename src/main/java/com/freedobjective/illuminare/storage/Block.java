@@ -20,7 +20,7 @@ public class Block implements Serializable {
 		setLevel(level);
 		this.pos = pos;
 		this.dims = dimensions;
-		this.entities = new ArrayList(Arrays.asList(entities));
+		this.entities = new ArrayList<Entity>(Arrays.asList(entities));
 	}
 
 	protected Block() {
