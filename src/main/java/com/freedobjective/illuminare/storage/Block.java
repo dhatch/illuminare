@@ -16,8 +16,7 @@ public class Block implements Serializable {
 	private Vector2f pos;
 	private Vector2f dims;
 	
-	public Block(Level level, Vector2f pos, Vector2f dimensions, Entity... entities) {
-		setLevel(level);
+	public Block(Vector2f pos, Vector2f dimensions, Entity... entities) {
 		this.pos = pos;
 		this.dims = dimensions;
 		this.entities = new ArrayList<Entity>(Arrays.asList(entities));
