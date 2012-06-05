@@ -21,7 +21,11 @@ public class Block implements Serializable {
 		this.dims = dimensions;
 		this.entities = new ArrayList<Entity>(Arrays.asList(entities));
 	}
-
+	
+	public Block(Vector2f pos, Vector2f dimensions) {
+		this(pos, dimensions, new Entity[]{});
+	}
+	
 	protected Block() {
 		
 	}
