@@ -7,7 +7,7 @@ import com.freedobjective.illuminare.framework.coordinates.Mesh;
 
 public class Cave extends Entity {
 	private Mesh mesh;
-	protected static String spriteClass = "CaveSprite";
+	protected static String spriteClass = "com.illuminare.freedobjective.sprites.CaveSprite";
 	
 	public Cave(Mesh mesh) {
 		super(new Vector2f(0.0f, 0.0f));
