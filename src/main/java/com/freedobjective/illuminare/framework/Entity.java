@@ -50,25 +50,5 @@ public abstract class Entity implements Serializable {
 		return spriteClass;
 	}
 	
-	public Entity person(Block block, Vector2f pos, int health, int lives){
-		this.block = block
-		this.pos = pos;
-		this.health = health;
-		this.lives = lives;
-		return this.person();
-	}
-
-	public Entity ghost(Block block, Vector2f pos){
-		this.block = block
-		this.pos = pos;
-		return this.ghost();
-	}
-	
-	public Entity savePoint(Block block, Vector2f pos){
-		this.block = block
-		this.pos = pos;
-		return this.savePoint(); 
-	}
-	
 	
 }
