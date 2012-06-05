@@ -9,8 +9,8 @@ public class Cave extends Entity {
 	private Mesh mesh;
 	protected static String spriteClass = "CaveSprite";
 	
-	public Cave(Mesh mesh) {
-		super(new Vector2f(0.0f, 0.0f));
+	public Cave(Block block, Mesh mesh) {
+		super(block, new Vector2f(0.0f, 0.0f));
 		this.mesh = mesh;
 	}
 	

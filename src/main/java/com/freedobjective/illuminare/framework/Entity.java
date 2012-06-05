@@ -21,7 +21,8 @@ public abstract class Entity implements Serializable {
 	 */
 	protected static String spriteClass;
 	
-	public Entity(Vector2f pos) {
+	public Entity(Block block, Vector2f pos) {
+		this.block = block;
 		this.pos = pos;
 	}
 	
