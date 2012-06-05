@@ -13,7 +13,7 @@ public class LevelManager {
 	public Level loadLevel(String levelName) {
 		Level l = new Level("default");
 		l.addBlock(new Block(new Vector2f(0.0f, 0.0f), blockSize));
-		Block main = l.getBlocks().get(0);
+		Block main = l.getBlocks().get(0).get(0);
 		Cave c = new Cave(new Mesh(new ArrayList<Vector2f>(Arrays.asList(
 				new Vector2f[]{
 					new Vector2f(0.0f, 0.0f),
