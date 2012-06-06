@@ -86,4 +86,13 @@ public class Block implements Serializable {
 	public void setDims(Vector2f dims) {
 		this.dims = dims;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Block) {
+			Block b = (Block)obj;
+			return b.getLevel().equals(level) && b.getPos().equals(pos);
+		}
+		return super.equals(obj);
+	}
 }

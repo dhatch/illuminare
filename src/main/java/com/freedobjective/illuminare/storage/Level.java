@@ -122,4 +122,12 @@ public class Level implements Serializable {
 	public Block getBlock(Vector2f pos) {
 		return getBlock(pos.x, pos.y);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Level) {
+			return ((Level)obj).getLevelName().equals(this.levelName);
+		}
+		return super.equals(obj);
+	}
 }

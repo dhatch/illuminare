@@ -65,4 +65,13 @@ public abstract class AbstractSprite implements Sprite {
 	 * Save myself to entity.
 	 */
 	public abstract void save();
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Sprite) {
+			// No real case where sprites will be equal besides them being the exact same object in memory.
+			return obj == this;
+		}
+		return false;
+	}
 }
