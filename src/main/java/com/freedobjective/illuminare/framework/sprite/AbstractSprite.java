@@ -2,6 +2,7 @@ package com.freedobjective.illuminare.framework.sprite;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.freedobjective.illuminare.framework.Entity;
 import com.freedobjective.illuminare.framework.RenderContext;
 import com.freedobjective.illuminare.framework.coordinates.CoordinateSystem;
 
@@ -9,6 +10,7 @@ public abstract class AbstractSprite implements Sprite {
 
 	private CoordinateSystem coordinateSystem;
 	private CoordinateSystem modelCoordinates;
+	private Entity entity;
 	
 	public AbstractSprite(CoordinateSystem coordSys, Vector2f pos) {
 		coordinateSystem = coordSys;
@@ -50,4 +52,17 @@ public abstract class AbstractSprite implements Sprite {
 	public CoordinateSystem getModelCoordinateSystem() {
 		return modelCoordinates;
 	}
+
+	public Entity getEntity() {
+		return entity;
+	}
+
+	public void setEntity(Entity entity) {
+		this.entity = entity;
+	}
+	
+	/**
+	 * Save myself to entity.
+	 */
+	public abstract void save();
 }

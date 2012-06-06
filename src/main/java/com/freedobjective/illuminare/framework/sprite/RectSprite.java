@@ -127,5 +127,8 @@ public class RectSprite extends AbstractSprite {
 	public int getVao() {
 		return vao;
 	}
-
+	
+	public void save() {
+		
+	}
 }

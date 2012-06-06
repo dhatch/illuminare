@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.freedobjective.illuminare.framework.Entity;
+import com.freedobjective.illuminare.framework.RenderGroup;
 import com.freedobjective.illuminare.framework.World;
 import com.freedobjective.illuminare.framework.sprite.Sprite;
 import com.freedobjective.illuminare.storage.Block;
@@ -21,11 +22,7 @@ public class LoadManager {
 	 * Sets the extra area around the camera view to load sprites from.
 	 */
 	private float extraDims;
-	/**
-	 * Should be initialized with the mapping of spriteClass strings used in entities within the level to 
-	 * the classes to be used for those entities.
-	 */
-	private Map<String, Class> spriteClassMapping;
+
 	/**
 	 * Control which sprites are placed in which render group (by name)
 	 */
@@ -36,13 +33,11 @@ public class LoadManager {
 	private ArrayList<Block> lastBlocks;
 	
 	public LoadManager(World world, Level level, float extraDims,
-			Map<String, Class> spriteClassMapping,
 			Map<Sprite, String> spriteRenderGroupMapping) {
 		
 		this.world = world;
 		this.level = level;
 		this.extraDims = extraDims;
-		this.spriteClassMapping = spriteClassMapping;
 		this.spriteRenderGroupMapping = spriteRenderGroupMapping;
 		this.lastBlocks = new ArrayList<Block>();
 	}
@@ -53,23 +48,21 @@ public class LoadManager {
 	 */
 	public void update() {
 		Block camBlock = level.getBlock(world.getCamera().getWorldPos());
+		ArrayList<Block> addedBlocks = new ArrayList<Block>();
 		// Sprites within this block should be loaded
-		
-		for (Entity e: camBlock.getEntities()) {
-			Class spriteClass = null;
-			try {
-				spriteClass = Class.forName(e.getSpriteClassName());
-			} catch (ClassNotFoundException e1) {
-				e1.printStackTrace();
+		if (!lastBlocks.contains(camBlock)) {
+			for (Entity e: camBlock.getEntities()) {
+				Sprite s = e.getSprite();
+				RenderGroup g = world.getGroup(spriteRenderGroupMapping.get(s));
+				g.addSprite(s);
 			}
-			if (spriteClass != null) {
-				// TODO: Time to initialize this.				
-			}
+			addedBlocks.add(camBlock);
 		}
 		// TODO: check for other blocks within extraDims of the camera and load those as well to speed up process.
 		
 		
 		// Remove sprites from blocks which have exited since the last frame.
+		lastBlocks = addedBlocks;
 	}
 	
 	public World getWorld() {
@@ -89,12 +82,6 @@ public class LoadManager {
 	}
 	public void setExtraDims(float extraDims) {
 		this.extraDims = extraDims;
-	}
-	public Map<String, Class> getSpriteClassMapping() {
-		return spriteClassMapping;
-	}
-	public void setSpriteClassMapping(Map<String, Class> spriteClassMapping) {
-		this.spriteClassMapping = spriteClassMapping;
 	}
 	public Map<Sprite, String> getSpriteRenderGroupMapping() {
 		return spriteRenderGroupMapping;
