@@ -64,7 +64,11 @@ public abstract class AbstractSprite implements Sprite {
 	/**
 	 * Save myself to entity.
 	 */
-	public abstract void save();
+	public void save() {
+		if (entity != null) {
+			entity.saveSprite(this);
+		}
+	}
 	
 	@Override
 	public boolean equals(Object obj) {

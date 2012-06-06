@@ -1,32 +1,42 @@
 package com.freedobjective.illuminare.framework.sprite;
 
+import static org.lwjgl.opengl.GL11.GL_FLOAT;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11.GL_UNSIGNED_SHORT;
+import static org.lwjgl.opengl.GL11.glDrawElements;
+import static org.lwjgl.opengl.GL11.glGetInteger;
+import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
+import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL15.glBindBuffer;
+import static org.lwjgl.opengl.GL15.glBufferData;
+import static org.lwjgl.opengl.GL15.glGenBuffers;
+import static org.lwjgl.opengl.GL20.GL_CURRENT_PROGRAM;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glGetUniformLocation;
+import static org.lwjgl.opengl.GL20.glUniformMatrix4;
+import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector4f;
-
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL21.*;
-import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL31.*;
-import static org.lwjgl.opengl.GL32.*;
 
 import com.freedobjective.illuminare.framework.RenderContext;
 import com.freedobjective.illuminare.framework.coordinates.CoordinateSystem;
 
-public class RectSprite extends AbstractSprite {
+public class MeshSprite extends AbstractSprite {
 
 	private FloatBuffer vertexPositions;
 	private int vao;
 	private Vector2f dimensions;
 	private float[] positions;
 	
-	public RectSprite(CoordinateSystem coordSys, Vector2f dimensions, Vector2f pos) {
+	public MeshSprite(CoordinateSystem coordSys, Vector2f dimensions, Vector2f pos) {
 		super(coordSys, pos);
 		this.dimensions = dimensions;
 	}
@@ -67,7 +77,7 @@ public class RectSprite extends AbstractSprite {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-	
+
 	protected float[] getVertexAttribArray() {
 		return new float[]{
 				0.0f, 0.0f, 0.0f, 1.0f,
@@ -85,7 +95,7 @@ public class RectSprite extends AbstractSprite {
 	
 	@Override
 	public void update(int delta) {
-
+		
 	}
 
 	@Override
@@ -109,22 +119,9 @@ public class RectSprite extends AbstractSprite {
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 		glBindVertexArray(0);
 	}
-	
 
 	@Override
 	public void destroy() {
 		
-	}
-
-	public Vector2f getDimensions() {
-		return dimensions;
-	}
-
-	public void setDimensions(Vector2f dimensions) {
-		this.dimensions = dimensions;
-	}
-
-	public int getVao() {
-		return vao;
 	}
 }

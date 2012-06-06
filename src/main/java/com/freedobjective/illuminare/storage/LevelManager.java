@@ -22,7 +22,7 @@ public class LevelManager {
 					new Vector2f(100.0f, 0.0f),
 					new Vector2f(0.0f, 0.0f)
 				}
-		))));
+		))), new Vector2f(0.0f, 0.0f));
 		main.addEntity(c);
 		return l;
 	}
