@@ -75,7 +75,6 @@ public class MeshSprite extends AbstractSprite {
 			ret[i+3] = color.w;
 			i += 4;
 		}
-		System.out.println(Arrays.toString(ret));
 		return ret;
 		
 	}
