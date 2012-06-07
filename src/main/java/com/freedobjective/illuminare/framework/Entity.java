@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import com.freedobjective.illuminare.framework.sprite.Sprite;
 import com.freedobjective.illuminare.storage.Block;
 
 public abstract class Entity implements Serializable {
@@ -16,10 +17,6 @@ public abstract class Entity implements Serializable {
 	 * The block this entity exists in.
 	 */
 	private Block block;
-	/**
-	 * Maps this entity to the sprite with which it represents.
-	 */
-	protected static String spriteClass;
 	
 	public Entity(Vector2f pos) {
 		this.pos = pos;
@@ -44,10 +41,13 @@ public abstract class Entity implements Serializable {
 	public void setBlock(Block block) {
 		this.block = block;
 	}
-
-	public String getSpriteClassName() {
-		return spriteClass;
-	}
 	
-	
+	/**
+	 * @return a new instance of the associated sprite loaded with the stored data.
+	 */
+	public abstract Sprite getSprite();
+	/**
+	 * Save this sprite's data to myself.
+	 */
+	public abstract void saveSprite(Sprite s);
 }

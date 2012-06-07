@@ -70,4 +70,29 @@ public class Block implements Serializable {
 	public CoordinateSystem getCoordinateSystem() {
 		return coordSystem;
 	}
+
+	public Vector2f getPos() {
+		return pos;
+	}
+
+	public void setPos(Vector2f pos) {
+		this.pos = pos;
+	}
+
+	public Vector2f getDims() {
+		return dims;
+	}
+
+	public void setDims(Vector2f dims) {
+		this.dims = dims;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Block) {
+			Block b = (Block)obj;
+			return b.getLevel().equals(level) && b.getPos().equals(pos);
+		}
+		return super.equals(obj);
+	}
 }

@@ -1,34 +1,37 @@
 package com.freedobjective.illuminare.framework.sprite;
 
-import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
-
-import org.lwjgl.BufferUtils;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector4f;
-
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL21.*;
 import static org.lwjgl.opengl.GL30.*;
-import static org.lwjgl.opengl.GL31.*;
-import static org.lwjgl.opengl.GL32.*;
+
+import java.awt.Color;
+import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
+import java.util.Arrays;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.util.vector.Vector4f;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 
 import com.freedobjective.illuminare.framework.RenderContext;
 import com.freedobjective.illuminare.framework.coordinates.CoordinateSystem;
+import com.freedobjective.illuminare.framework.coordinates.Mesh;
 
-public class RectSprite extends AbstractSprite {
+public class MeshSprite extends AbstractSprite {
 
 	private FloatBuffer vertexPositions;
+	private Mesh mesh;
 	private int vao;
 	private Vector2f dimensions;
 	private float[] positions;
+	private Vector4f color;
 	
-	public RectSprite(CoordinateSystem coordSys, Vector2f dimensions, Vector2f pos) {
+	public MeshSprite(CoordinateSystem coordSys, Mesh mesh, Vector2f pos, Vector4f col) {
 		super(coordSys, pos);
-		this.dimensions = dimensions;
+		this.mesh = mesh;
+		color = col;
 	}
 	
 	@Override
@@ -45,47 +48,49 @@ public class RectSprite extends AbstractSprite {
 		glBufferData(GL_ARRAY_BUFFER, posBuffer, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
-		final short[] indexOrder = {
-			0, 1, 3, 0, 2, 3
-		};
-		ShortBuffer indexBuffer = BufferUtils.createShortBuffer(indexOrder.length);
-		indexBuffer.put(indexOrder);
-		indexBuffer.flip();
-		
-		int ibo = glGenBuffers();
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer, GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		
         // Set up VAO for rendering.
 		vao = glGenVertexArrays();
 		glBindVertexArray(vao);
 		bindVertexAttribArray(vbo);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 		
 		glBindVertexArray(0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-	
+
 	protected float[] getVertexAttribArray() {
-		return new float[]{
-				0.0f, 0.0f, 0.0f, 1.0f,
-				0.0f, dimensions.y, 0.0f, 1.0f,
-				dimensions.x, 0.0f, 0.0f, 1.0f,
-				dimensions.x, dimensions.y, 0.0f, 1.0f
-			};
+		float[] ret = new float[8*mesh.getPositions().size()];
+		int i = 0;
+		for (Vector2f p: mesh.getPositions()) {
+			ret[i] = p.x;
+			ret[i+1] = p.y;
+			ret[i+2] = 0.0f;
+			ret[i+3] = 1.0f;
+			i += 4;
+		}
+		for (Vector2f p: mesh.getPositions()) {
+			ret[i] = color.x;
+			ret[i+1] = color.y;
+			ret[i+2] = color.z;
+			ret[i+3] = color.w;
+			i += 4;
+		}
+		System.out.println(Arrays.toString(ret));
+		return ret;
+		
 	}
 	
 	protected void bindVertexAttribArray(int vbo) {
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 4, GL_FLOAT, false, 0, 0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 4, GL_FLOAT, false, 0, 16*mesh.getPositions().size());
 	}
 	
 	@Override
 	public void update(int delta) {
-
+		
 	}
 
 	@Override
@@ -106,25 +111,12 @@ public class RectSprite extends AbstractSprite {
 		glUniformMatrix4(transUniform, false, mat);
 		
 		glBindVertexArray(vao);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, mesh.getPositions().size());
 		glBindVertexArray(0);
 	}
-	
 
 	@Override
 	public void destroy() {
 		
-	}
-
-	public Vector2f getDimensions() {
-		return dimensions;
-	}
-
-	public void setDimensions(Vector2f dimensions) {
-		this.dimensions = dimensions;
-	}
-
-	public int getVao() {
-		return vao;
 	}
 }

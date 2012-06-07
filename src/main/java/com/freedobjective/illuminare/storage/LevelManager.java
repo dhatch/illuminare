@@ -1,6 +1,9 @@
 package com.freedobjective.illuminare.storage;
 
 import org.lwjgl.util.vector.Vector2f;
+
+import com.freedobjective.illuminare.framework.coordinates.Mesh;
+
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -8,6 +11,8 @@ import java.io.OutputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LevelManager {
 	public static final Vector2f blockSize = new Vector2f(1000.0f, 1000.0f);
@@ -31,19 +36,40 @@ public class LevelManager {
 			ex.printStackTrace();
 		}	
 	}
-	public Level loadLevel(String fileName){
-		Level level = null;
-		FileInputStream fis = null;
-		ObjectInputStream in = null;
-		try{
-			fis = new FileInputStream(fileName);
-			in = new ObjectInputStream(fis);
-			level = (Level)in.readObject();
-			in.close();
-		} catch (IOException ex){
-			ex.printStackTrace();
-		} 
-		return level;
-	}
 
+
+	// Actual implementation...
+//	public Level loadLevel(String fileName){
+//		Level level = null;
+//		FileInputStream fis = null;
+//		ObjectInputStream in = null;
+//		try{
+//			fis = new FileInputStream(fileName);
+//			in = new ObjectInputStream(fis);
+//			level = (Level)in.readObject();
+//			in.close();
+//		} catch (IOException ex){
+//			ex.printStackTrace();
+//		} 
+//		return level;
+//	}
+	// ........
+	
+	// Stubed for convenience until LevelGenerator exists.
+	public Level loadLevel(String levelName) {
+		Level l = new Level("default");
+		l.addBlock(new Block(new Vector2f(0.0f, 0.0f), blockSize));
+		Block main = l.getBlocks().get(0).get(0);
+		Cave c = new Cave(new Mesh(new ArrayList<Vector2f>(Arrays.asList(
+				new Vector2f[]{
+					new Vector2f(0.0f, 0.0f),
+					new Vector2f(0.0f, 50.0f),
+					new Vector2f(100.0f, 50.0f),
+					new Vector2f(100.0f, 0.0f),
+					new Vector2f(0.0f, 0.0f)
+				}
+		))), new Vector2f(0.0f, 0.0f));
+		main.addEntity(c);
+		return l;
+	}
 }

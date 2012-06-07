@@ -4,13 +4,13 @@ import org.lwjgl.util.vector.Vector2f;
 
 import com.freedobjective.illuminare.framework.Entity;
 import com.freedobjective.illuminare.framework.coordinates.Mesh;
+import com.freedobjective.illuminare.framework.sprite.Sprite;
 
 public class Cave extends Entity {
 	private Mesh mesh;
-	protected static String spriteClass = "CaveSprite";
 	
-	public Cave(Mesh mesh) {
-		super(new Vector2f(0.0f, 0.0f));
+	public Cave(Mesh mesh, Vector2f pos) {
+		super(pos);
 		this.mesh = mesh;
 	}
 	
@@ -27,7 +27,13 @@ public class Cave extends Entity {
 	}
 
 	@Override
-	public void setPos(Vector2f pos) {
-		// no op
+	public Sprite getSprite() {
+		// TODO: Implement
+		return null;
+	}
+
+	@Override
+	public void saveSprite(Sprite s) {
+		// TODO: implement
 	}
 }

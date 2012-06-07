@@ -7,6 +7,7 @@ import java.util.Arrays;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import com.freedobjective.illuminare.framework.Application;
 import com.freedobjective.illuminare.framework.Game;
@@ -14,6 +15,8 @@ import com.freedobjective.illuminare.framework.Program;
 import com.freedobjective.illuminare.framework.RenderGroup;
 import com.freedobjective.illuminare.framework.Shader;
 import com.freedobjective.illuminare.framework.World;
+import com.freedobjective.illuminare.framework.coordinates.Mesh;
+import com.freedobjective.illuminare.framework.sprite.MeshSprite;
 import com.freedobjective.illuminare.framework.sprite.RectSprite;
 import com.freedobjective.illuminare.framework.sprite.Sprite;
 import com.freedobjective.illuminare.framework.sprite.TextureSprite;
@@ -55,6 +58,27 @@ public class IlluminareGame implements Game {
 		sprites = new ArrayList<Sprite>();
 		sprites.add(new TextureSprite(world.getCoordinateSystem(), new Vector2f(100.0f, 100.0f), new Vector2f(500.0f, 500.0f), "placeholder.png"));
 		world.addGroup(new RenderGroup("texture", sprites, textureProg));
+		
+		Shader mVertex = new Shader("target/meshshad.v.glsl", GL_VERTEX_SHADER);
+		Shader mFrag = new Shader("target/meshshad.f.glsl", GL_FRAGMENT_SHADER);
+		Program mProg = new Program(new ArrayList<Shader>(Arrays.asList(new Shader[]{mVertex,mFrag})));
+		
+		sprites = new ArrayList<Sprite>();
+		ArrayList<Vector2f> meshPositions = new ArrayList<Vector2f>();
+		meshPositions.add(new Vector2f(0.0f, 0.0f));
+		meshPositions.add(new Vector2f(100.0f, 100.0f));
+		meshPositions.add(new Vector2f(200.0f, 100.0f));
+		
+		// TODO: subclass MeshSprite into CaveSprite to draw cave, reading from Cave in com.freedobjective.illuminare.storage
+		sprites.add(
+				new MeshSprite(
+						world.getCoordinateSystem(),
+						new Mesh(meshPositions),
+						new Vector2f(500.0f, 500.0f),
+						new Vector4f(0.5f, 0.5f, 0.5f, 1.0f)
+				)
+		);
+		world.addGroup(new RenderGroup("mesh", sprites, mProg));
 		
 		try {
 			world.init();
