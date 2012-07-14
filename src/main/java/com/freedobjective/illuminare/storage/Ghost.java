@@ -1,6 +1,9 @@
 package com.freedobjective.illuminare.storage;
 
+import org.lwjgl.util.vector.Vector2f;
+
 import com.freedobjective.illuminare.framework.Entity;
+import com.freedobjective.illuminare.framework.sprite.Sprite;
 
 public class Ghost extends Entity {
 
@@ -18,12 +21,23 @@ public class Ghost extends Entity {
 	public boolean isAlive(){
 		if(health > 0)
 			return true;
-		else if(health <=0)
-			return false;
+		
+		return false;
 	}
 
 	public void loseHealth(int loss){
-		this.loss = loss;
-		health += health - loss;
+		health -= loss;
+	}
+
+	@Override
+	public Sprite getSprite() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void saveSprite(Sprite s) {
+		// TODO Auto-generated method stub
+		
 	}
 }

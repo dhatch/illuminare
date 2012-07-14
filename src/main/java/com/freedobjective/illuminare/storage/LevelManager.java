@@ -24,18 +24,18 @@ public class LevelManager {
 	/**
 	 * @param levelName
 	 */
-	public void saveLevel(String levelName){
-		FileOutputStream fos = null;
-		ObjectOutputStream out = null;
-		try{
-			fos = new FileOutputStream(levelName + ".info");
-			out = new ObjectOutputStream(fos);
-			out.writeObject(this);
-			out.close();
-		} catch (IOException ex){
-			ex.printStackTrace();
-		}	
-	}
+//	public static void saveLevel(String levelName) {
+//		FileOutputStream fos = null;
+//		ObjectOutputStream out = null;
+//		try{
+//			fos = new FileOutputStream(levelName + ".info");
+//			out = new ObjectOutputStream(fos);
+//			out.writeObject(this);
+//			out.close();
+//		} catch (IOException ex){
+//			ex.printStackTrace();
+//		}	
+//	}
 
 
 	// Actual implementation...
@@ -55,8 +55,8 @@ public class LevelManager {
 //	}
 	// ........
 	
-	// Stubed for convenience until LevelGenerator exists.
-	public Level loadLevel(String levelName) {
+	// Stubbed for convenience until LevelGenerator exists.
+	public static Level loadLevel(String levelName) {
 		Level l = new Level("default");
 		l.addBlock(new Block(new Vector2f(0.0f, 0.0f), blockSize));
 		Block main = l.getBlocks().get(0).get(0);
@@ -70,6 +70,7 @@ public class LevelManager {
 				}
 		))), new Vector2f(0.0f, 0.0f));
 		main.addEntity(c);
+		l.setCameraPosition(new Vector2f(500.0f, 500.0f));
 		return l;
 	}
 }

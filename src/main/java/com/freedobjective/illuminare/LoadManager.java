@@ -1,6 +1,7 @@
 package com.freedobjective.illuminare;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map;
 
 import com.freedobjective.illuminare.framework.Entity;
@@ -26,20 +27,20 @@ public class LoadManager {
 	/**
 	 * Control which sprites are placed in which render group (by name)
 	 */
-	private Map<Sprite, String> spriteRenderGroupMapping;
+	private Map<Class, String> spriteRenderGroupMapping;
 	/**
 	 * Stores the blocks which were loaded during the last frame.
 	 */
-	private ArrayList<Block> lastBlocks;
+	private HashSet<Block> inLevelBlocks;
 	
 	public LoadManager(World world, Level level, float extraDims,
-			Map<Sprite, String> spriteRenderGroupMapping) {
+			Map<Class, String> spriteRenderGroupMapping) {
 		
 		this.world = world;
 		this.level = level;
 		this.extraDims = extraDims;
 		this.spriteRenderGroupMapping = spriteRenderGroupMapping;
-		this.lastBlocks = new ArrayList<Block>();
+		this.inLevelBlocks = new HashSet<Block>();
 	}
 	
 	/**
@@ -50,19 +51,23 @@ public class LoadManager {
 		Block camBlock = level.getBlock(world.getCamera().getWorldPos());
 		ArrayList<Block> addedBlocks = new ArrayList<Block>();
 		// Sprites within this block should be loaded
-		if (!lastBlocks.contains(camBlock)) {
+		if (!inLevelBlocks.contains(camBlock)) {
 			for (Entity e: camBlock.getEntities()) {
 				Sprite s = e.getSprite();
-				RenderGroup g = world.getGroup(spriteRenderGroupMapping.get(s));
+				RenderGroup g = world.getGroup(spriteRenderGroupMapping.get(s.getClass()));
+				// TODO: this needs to happen. but this is not a good spot probably. not sure. this will take more resources than we'd like to happen during the render loop
+				s.init();
 				g.addSprite(s);
+				System.out.println("Added sprite: "+s);
 			}
 			addedBlocks.add(camBlock);
 		}
 		// TODO: check for other blocks within extraDims of the camera and load those as well to speed up process.
 		
 		
-		// Remove sprites from blocks which have exited since the last frame.
-		lastBlocks = addedBlocks;
+		// TODO: Remove sprites from blocks which have exited since the last frame.
+		
+		inLevelBlocks.addAll(addedBlocks);
 	}
 	
 	public World getWorld() {
@@ -83,11 +88,11 @@ public class LoadManager {
 	public void setExtraDims(float extraDims) {
 		this.extraDims = extraDims;
 	}
-	public Map<Sprite, String> getSpriteRenderGroupMapping() {
+	public Map<Class, String> getSpriteRenderGroupMapping() {
 		return spriteRenderGroupMapping;
 	}
 	public void setSpriteRenderGroupMapping(
-			Map<Sprite, String> spriteRenderGroupMapping) {
+			Map<Class, String> spriteRenderGroupMapping) {
 		this.spriteRenderGroupMapping = spriteRenderGroupMapping;
 	}
 }

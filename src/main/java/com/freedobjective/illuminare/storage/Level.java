@@ -18,11 +18,13 @@ public class Level implements Serializable {
 	private CoordinateSystem worldCoordinates;
 	private String levelName;
 	private Vector2f blockSize;
+	private Vector2f cameraPosition;
 	
 	public Level(String levelName) {
 		this.levelName = levelName;
 		this.worldCoordinates = CoordinateSystem.createCoordinateSystem();
 		this.blocks = new ArrayList<ArrayList<Block>>();
+		this.cameraPosition = new Vector2f(0.0f, 0.0f);
 	}
 	
 	protected Level() {
@@ -66,7 +68,7 @@ public class Level implements Serializable {
 			// There should be no remainder...
 			throw new BlockPositionError();
 		}
-		
+		System.out.println("addBlock() row: "+ r +  " col: " + c);
 		// Make sure there is no block in this position
 		boolean correct = false;
 		try {
@@ -92,11 +94,12 @@ public class Level implements Serializable {
 			col.set((int)c, block);
 		} catch (IndexOutOfBoundsException e) {
 			// fill with nulls
-			for (int x = 0; x < (int)c; x++) {
-				col.set(x, null);
+			for (int x = 0; x <= (int)c; x++) {
+				col.add(x, null);
 			}
+			col.set((int)c, block);
 		}
-		
+
 		block.setLevel(this);
 	}
 	
@@ -129,5 +132,13 @@ public class Level implements Serializable {
 			return ((Level)obj).getLevelName().equals(this.levelName);
 		}
 		return super.equals(obj);
+	}
+
+	public Vector2f getCameraPosition() {
+		return cameraPosition;
+	}
+
+	public void setCameraPosition(Vector2f cameraPosition) {
+		this.cameraPosition = cameraPosition;
 	}
 }

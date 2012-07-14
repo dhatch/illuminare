@@ -15,12 +15,12 @@ public class Camera {
 	private World world;
 	private CoordinateSystem coordinateSystem;
 	
-	public Camera(World world, Vector2f cameraDimensions) {
+	public Camera(World world, Vector2f cameraDimensions, Vector2f cameraPosition) {
 		this.world = world;
 		worldPos = new Vector2f();
 		scale = 1.0f;
 		this.cameraDimensions = new Vector2f(cameraDimensions);
-		coordinateSystem = CoordinateSystem.createCoordinateSystem(world.getCoordinateSystem(), scale, new Vector2f());
+		coordinateSystem = CoordinateSystem.createCoordinateSystem(world.getCoordinateSystem(), scale, cameraPosition);
 		transformCoordinateSystem();
 	}
 	

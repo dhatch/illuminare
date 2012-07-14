@@ -32,6 +32,10 @@ public class RenderGroup {
 		this.sprites = sprites;
 	}
 	
+	public RenderGroup(String groupID, Program prog) {
+		this(groupID, new ArrayList<Sprite>(), prog);
+	}
+	
 	/**
 	 * @throws IOException if the program cannot be compiled because it cannot be loaded from disk.
 	 */

@@ -1,10 +1,12 @@
 package com.freedobjective.illuminare.storage;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import com.freedobjective.illuminare.framework.Entity;
 import com.freedobjective.illuminare.framework.coordinates.Mesh;
 import com.freedobjective.illuminare.framework.sprite.Sprite;
+import com.freedobjective.illuminare.sprites.CaveSprite;
 
 public class Cave extends Entity {
 	private Mesh mesh;
@@ -28,12 +30,11 @@ public class Cave extends Entity {
 
 	@Override
 	public Sprite getSprite() {
-		// TODO: Implement
-		return null;
+		return new CaveSprite(getBlock().getCoordinateSystem(), mesh, getPos(), new Vector4f(0.5f, 0.5f, 0.5f, 1.0f));
 	}
 
 	@Override
 	public void saveSprite(Sprite s) {
-		// TODO: implement
+		
 	}
 }

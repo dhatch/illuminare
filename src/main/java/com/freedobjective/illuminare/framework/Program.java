@@ -2,6 +2,7 @@ package com.freedobjective.illuminare.framework;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
@@ -25,6 +26,10 @@ public class Program {
 	
 	public Program(ArrayList<Shader> shaders) {
 		this(shaders, new ArrayList<Program>());
+	}
+	
+	public Program(Shader... shaders) {
+		this(new ArrayList<Shader>(Arrays.asList(shaders)));
 	}
 	
 	public void addShader(Shader s) {

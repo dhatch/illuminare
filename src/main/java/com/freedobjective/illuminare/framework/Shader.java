@@ -16,6 +16,11 @@ public class Shader {
 	private String shaderContents;
 	private int shaderID;
 	
+	/**
+	 * @param shaderInfo Either the path of the shader on disk or a string with its contents.
+	 * @param shaderType Type of the shader
+	 * @param fromFile true if shaderInfo is a file path otherwise false;
+	 */
 	public Shader(String shaderInfo, int shaderType, boolean fromFile) {
 		this.shaderType = shaderType;
 		if (fromFile) {
@@ -25,6 +30,10 @@ public class Shader {
 		}
 	}
 	
+	/**
+	 * @param shaderLocation location to find shader on disk
+	 * @param shaderType type of shader. (geometry or vertex)
+	 */
 	public Shader(String shaderLocation, int shaderType) {
 		this(shaderLocation, shaderType, true);
 	}

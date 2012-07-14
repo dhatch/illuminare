@@ -2,6 +2,7 @@ package com.freedobjective.illuminare.framework;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,13 +19,17 @@ public class World {
 	private Camera camera;
 	private CoordinateSystem coordinateSystem;
 	
-	public World(ArrayList<RenderGroup> groups, Vector2f cameraDimensions) {
+	public World(ArrayList<RenderGroup> groups, Vector2f cameraDimensions, Vector2f cameraPosition) {
 		this.groups = new HashMap<String, RenderGroup>();
 		setGroups(groups);
 		coordinateSystem = CoordinateSystem.createCoordinateSystem();
-		camera = new Camera(this, cameraDimensions);
+		camera = new Camera(this, cameraDimensions, cameraPosition);
 	}
-
+	
+	public World(Vector2f cameraDimensions, Vector2f cameraPosition, RenderGroup... groups) {
+		this(new ArrayList<RenderGroup>(Arrays.asList(groups)), cameraDimensions, cameraPosition);
+	}
+	
 	public ArrayList<RenderGroup> getGroups() {
 		return new ArrayList<RenderGroup>(groups.values());
 	}

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.util.vector.Vector2f;
@@ -20,6 +22,9 @@ import com.freedobjective.illuminare.framework.sprite.MeshSprite;
 import com.freedobjective.illuminare.framework.sprite.RectSprite;
 import com.freedobjective.illuminare.framework.sprite.Sprite;
 import com.freedobjective.illuminare.framework.sprite.TextureSprite;
+import com.freedobjective.illuminare.sprites.CaveSprite;
+import com.freedobjective.illuminare.storage.Level;
+import com.freedobjective.illuminare.storage.LevelManager;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
@@ -29,56 +34,40 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.opengl.GL32.*;
 
 public class IlluminareGame implements Game {
+	public static final Vector2f CAMERA_SIZE = new Vector2f(1000.0f, 1000.f);
 	
 	private World world;
-	private Program main;
 	private Application app;
+	private LoadManager loadManager;
 	
 	@Override
 	public void init(Application app) {
 		this.app = app;
-		System.out.println(glGetString(GL_SHADING_LANGUAGE_VERSION));
-		System.out.println(glGetString(GL_VERSION));
-
-		Shader vertex = new Shader("target/main.v.glsl", GL_VERTEX_SHADER);
-		Shader frag = new Shader("target/test.f.glsl", GL_FRAGMENT_SHADER);
-		Shader tVertex = new Shader("target/tex.v.glsl", GL_VERTEX_SHADER);
-		Shader tFrag = new Shader("target/tex.f.glsl", GL_FRAGMENT_SHADER);
 		
-		Program main = new Program(new ArrayList<Shader>(Arrays.asList(new Shader[]{vertex,frag})));
-		Program textureProg = new Program(new ArrayList<Shader>(Arrays.asList(new Shader[]{tVertex, tFrag})));
+		// Load the level from disk
+		// TODO: in the future this should use a name for the level string
+		Level level = LevelManager.loadLevel(null);
 		
-		world = new World(new ArrayList<RenderGroup>(), new Vector2f((float)(app.getAspectRatio()*1000), 1000.0f));
-		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		sprites.add(new RectSprite(world.getCoordinateSystem(), new Vector2f(100.0f, 100.0f), new Vector2f(0.0f, 0.0f)));
-		world.addGroup(new RenderGroup("base", sprites, main));
-
-		System.out.println(""+app.getAspectRatio() +"\n" + world.getCamera().getCameraDimensions());
-		
-		sprites = new ArrayList<Sprite>();
-		sprites.add(new TextureSprite(world.getCoordinateSystem(), new Vector2f(100.0f, 100.0f), new Vector2f(500.0f, 500.0f), "placeholder.png"));
-		world.addGroup(new RenderGroup("texture", sprites, textureProg));
-		
-		Shader mVertex = new Shader("target/meshshad.v.glsl", GL_VERTEX_SHADER);
-		Shader mFrag = new Shader("target/meshshad.f.glsl", GL_FRAGMENT_SHADER);
-		Program mProg = new Program(new ArrayList<Shader>(Arrays.asList(new Shader[]{mVertex,mFrag})));
-		
-		sprites = new ArrayList<Sprite>();
-		ArrayList<Vector2f> meshPositions = new ArrayList<Vector2f>();
-		meshPositions.add(new Vector2f(0.0f, 0.0f));
-		meshPositions.add(new Vector2f(100.0f, 100.0f));
-		meshPositions.add(new Vector2f(200.0f, 100.0f));
-		
-		// TODO: subclass MeshSprite into CaveSprite to draw cave, reading from Cave in com.freedobjective.illuminare.storage
-		sprites.add(
-				new MeshSprite(
-						world.getCoordinateSystem(),
-						new Mesh(meshPositions),
-						new Vector2f(500.0f, 500.0f),
-						new Vector4f(0.5f, 0.5f, 0.5f, 1.0f)
-				)
+		// Load Shaders
+		Program caveProgram = new Program(
+			new Shader("src/main/shaders/meshshad.v.glsl", GL_VERTEX_SHADER),
+			new Shader("src/main/shaders/meshshad.f.glsl", GL_FRAGMENT_SHADER)
 		);
-		world.addGroup(new RenderGroup("mesh", sprites, mProg));
+				
+		// Initialize the world
+		// RenderGroup defs
+		RenderGroup caveGroup = new RenderGroup("cave", caveProgram);
+		
+		this.world = new World(this.CAMERA_SIZE, level.getCameraPosition(),
+			caveGroup
+		);
+		
+		// Initialize the LoadManager
+		Map spriteRenderGroupMapping = new HashMap<Class, String>();
+		spriteRenderGroupMapping.put(CaveSprite.class, "cave");
+		LoadManager loader = new LoadManager(world, level, 50.0f, spriteRenderGroupMapping);
+		this.loadManager = loader;
+		
 		
 		try {
 			world.init();
@@ -101,6 +90,7 @@ public class IlluminareGame implements Game {
 
 	@Override
 	public void update(int delta) {
+		this.loadManager.update();
 		world.update(delta);
 	}
 
