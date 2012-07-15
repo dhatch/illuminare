@@ -75,7 +75,6 @@ public class MeshSprite extends AbstractSprite {
 			ret[i+3] = color.w;
 			i += 4;
 		}
-		System.out.println(Arrays.toString(ret));
 		return ret;
 		
 	}
@@ -107,11 +106,9 @@ public class MeshSprite extends AbstractSprite {
 		matrix = Matrix4f.mul(context.getCamera().getWorldToCameraTransform(), matrix, null);
 		matrix.store(mat);
 		mat.flip();
-
+		
+		
 		glUniformMatrix4(transUniform, false, mat);
-		for (int i = 0; i < mesh.getPositions().size(); i++) {
-			System.out.println("Rendering: " + Matrix4f.transform(context.getCamera().getCameraToClipTransform(), Matrix4f.transform(matrix, new Vector4f(mesh.getPositions().get(i).x, mesh.getPositions().get(i).y, 0.0f, 1.0f), null), null));
-		}
 		
 		glBindVertexArray(vao);
 		glDrawArrays(GL_TRIANGLES, 0, mesh.getPositions().size());

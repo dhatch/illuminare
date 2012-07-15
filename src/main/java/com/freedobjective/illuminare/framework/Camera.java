@@ -39,7 +39,7 @@ public class Camera {
 	}
 	
 	public void resize(int height, int width) {
-		setCameraDimensions(new Vector2f(height, width));
+
 	}
 	
 	public Vector2f getWorldPos() {
@@ -65,6 +65,7 @@ public class Camera {
 	}
 	
 	public Matrix4f getCameraToClipTransform() {
+//		TODO: probably cache this matrix
 		Matrix4f mat = new Matrix4f();
 		mat.m00 = 2/cameraDimensions.x;
 		mat.m11 = 2/cameraDimensions.y;

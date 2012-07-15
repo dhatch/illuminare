@@ -9,7 +9,7 @@ public class IlluminareDesktopStarter {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new Application(new IlluminareGame(), 1152, 768);
+		new Application(new IlluminareGame(), 1000, 1000);
 	}
 
 }

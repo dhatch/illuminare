@@ -63,10 +63,11 @@ public class LevelManager {
 		Cave c = new Cave(new Mesh(new ArrayList<Vector2f>(Arrays.asList(
 				new Vector2f[]{
 					new Vector2f(0.0f, 0.0f),
-					new Vector2f(0.0f, 50.0f),
-					new Vector2f(100.0f, 50.0f),
-					new Vector2f(100.0f, 0.0f),
-					new Vector2f(0.0f, 0.0f)
+					new Vector2f(0.0f, 1000.0f),
+					new Vector2f(1000.0f, 1000.0f),
+					new Vector2f(0.0f, 0.0f),
+					new Vector2f(1000.0f, 0.0f),
+					new Vector2f(1000.0f, 1000.0f),
 				}
 		))), new Vector2f(0.0f, 0.0f));
 		main.addEntity(c);
